@@ -51,7 +51,7 @@ const CustomInput = (props) => {
                     {props.icon}
                 </InputIconDiv>
 
-                <Input placeholder={props.children}/>
+                <Input type={props.type ? props.type : "text"} placeholder={props.children}/>
             </InputDiv>
 
         </div>

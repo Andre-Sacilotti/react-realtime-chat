@@ -9,9 +9,18 @@ import {RiLockPasswordFill} from "react-icons/ri"
 const LoginBoxDiv = styled.div`
   border: 1px solid black;
   border-radius: 25px;
-  height: 45%;
+  height: 55%;
   width: 80%;
   background-color: #C4C4C4;
+  
+  @media(min-height: 668px){
+    height: 370px;
+  }
+  
+  
+  @media(min-width: 650px){
+    width: 515px;
+  }
 `
 
 const ForgetPassDiv = styled.div`
@@ -64,6 +73,7 @@ const LoginBox = () => {
                     >Username</CustomInput>
 
                     <CustomInput
+                        type={"password"}
                         icon={<RiLockPasswordFill style={{verticalAlign: 'bottom'}} />}
                     >Password</CustomInput>
 
