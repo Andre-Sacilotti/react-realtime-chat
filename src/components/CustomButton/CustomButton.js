@@ -1,44 +1,38 @@
 import React from 'react'
 import styled from 'styled-components'
 
+import {BGCOLOR, TEXTCOLOR, AUXILARCOLOR} from "../Colors"
+
 const Button = styled.a`
   
-  background-color: ${props => props.dark ? "#181818" : "#656E80"};
   color: #FFFFFF;
-  border-radius: 5px;
-  
-  
+  border: 1px solid ${TEXTCOLOR};
+  border-radius: 4px;
+
+
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  
-  
+
+
   height: 40px;
   max-height: 40px;
-  
+
   font-size: 16px;
-  font-weight: 200;
+  font-weight: 500;
 
   -webkit-user-select: none;
   -webkit-touch-callout: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  
-  
-  
-  
-  
-  &:hover {
-    background-color: ${props => props.dark ? "#181818" : "#575f6f"};
-  }
-  
-  &:active, &.active, &:focus {
 
-    border: none;
-    outline:none;
+
+  &:hover, &:active {
+    background-color: rgba(255, 255, 255, 0.1);
   }
-  
+
+
 
 `
 

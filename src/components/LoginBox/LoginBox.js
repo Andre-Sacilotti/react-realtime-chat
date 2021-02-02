@@ -3,93 +3,105 @@ import styled from "styled-components"
 
 import CustomButton from "../CustomButton/CustomButton";
 import CustomInput from "../CustomInput/CustomInput";
-import {FaUserAlt} from "react-icons/fa";
-import {RiLockPasswordFill} from "react-icons/ri"
+
+
+import {BGCOLOR, TEXTCOLOR, AUXILARCOLOR} from "../Colors"
 
 const LoginBoxDiv = styled.div`
-  border: 1px solid black;
   border-radius: 25px;
-  height: 55%;
-  width: 80%;
-  background-color: #C4C4C4;
+  height: 100%;
+  width: 100%;
+  background-color: ${BGCOLOR};
   
-  @media(min-height: 668px){
-    height: 370px;
+  @media(min-width: 768px) {
+    background-color: ${AUXILARCOLOR};
   }
   
+`
+
+const UpperLoginBoxDiv = styled.div`
+  border-radius: 25px;
+  height: 100%;
+  width: 100%;
+  background-color: ${BGCOLOR};
   
-  @media(min-width: 650px){
-    width: 515px;
+  color: ${TEXTCOLOR};
+
+  @media(min-width: 768px) {
+    background-color: ${AUXILARCOLOR};
+    height: 666px;
+    width: 414px;
   }
+  
 `
 
-const ForgetPassDiv = styled.div`
-  font-weight: 100;
-  font-size: 12px;
-  margin-top: -8px;
+const ButtonDiv = styled.div`
+  margin-top: 31px;
+  margin-bottom: 31px;
 `
 
-
-const AnonymBtnDiv = styled.div`
-  padding-top: 32px;
-  padding-bottom: 16px
+const TextDiv = styled.div`
+  margin-top: 16px;
 `
 
-const LoginBtnDiv = styled.div`
-  padding-top: 16px;
-  padding-bottom: 16px
+const Text = styled.span`
+  font-weight: 300;
+`
+
+const TextRegister = styled.span`
+  font-weight: 500;
+  font-size: 20px;
 `
 
 const FormsDiv = styled.div`
-  padding-top: 32px;
-  padding-bottom: 16px
+  padding-top: 100px;
 `
 
-const Logina = styled.a`
-  text-decoration: none;
 
-  &:active, &:visited {
-    text-decoration: none;
-    color: #323232;
-  }
 
-  &:hover {
-    color: black;
-  }
-
-`
 
 const LoginBox = () => {
 
     return (
+        <UpperLoginBoxDiv>
             <LoginBoxDiv>
-                <AnonymBtnDiv>
-                    <CustomButton dark={false}>Enter as Anonymus User</CustomButton>
-                </AnonymBtnDiv>
+
+                <ButtonDiv>
+                    <CustomButton>Enter as Anonymous</CustomButton>
+                </ButtonDiv>
+
+                <TextDiv>
+                    <Text>Or sign in</Text>
+                </TextDiv>
 
                 <FormsDiv>
-                    <CustomInput
-                    icon={<FaUserAlt style={{verticalAlign: 'bottom'}} />}
-                    >Username</CustomInput>
+                    <CustomInput>
+                        Username
+                    </CustomInput>
 
-                    <CustomInput
-                        type={"password"}
-                        icon={<RiLockPasswordFill style={{verticalAlign: 'bottom'}} />}
-                    >Password</CustomInput>
-
-                    <Logina href={""}>
-                        <ForgetPassDiv>Forgot your password?</ForgetPassDiv>
-                    </Logina>
+                    <CustomInput type={"password"}>
+                        Password
+                    </CustomInput>
                 </FormsDiv>
 
-                <LoginBtnDiv>
+                <ButtonDiv>
+                    <CustomButton>Login</CustomButton>
+                </ButtonDiv>
 
-                    <CustomButton dark={false}>Login</CustomButton>
-                </LoginBtnDiv>
-                <Logina href={""}>
-                    <ForgetPassDiv>Create new account.</ForgetPassDiv>
-                </Logina>
+                <TextDiv>
+                    <TextRegister>New here? Sign Up!</TextRegister>
+                </TextDiv>
+
+
+
+
+
+
+
+
             </LoginBoxDiv>
+        </UpperLoginBoxDiv>
+
     )
 }
 

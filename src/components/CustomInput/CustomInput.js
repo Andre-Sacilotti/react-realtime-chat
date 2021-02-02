@@ -1,45 +1,45 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import {FaUserAlt} from "react-icons/fa"
+import {BGCOLOR, TEXTCOLOR, AUXILARCOLOR} from "../Colors"
 
 const Input = styled.input`
-  border: 1px solid #A0A0A0;
-  height: 28px;
-  border-radius: 3px;
-  border-bottom-left-radius: 0px;
-  border-top-left-radius: 0px;
-  padding-left: 4px;
-  padding-right: 4px;
+  background-color: #FFFFFF00;    
+  border: 1px solid ${TEXTCOLOR};
+  border-radius: 4px;
   
+  height: 47px;
+  width: 245px;
+
+  font-size: 14px;
   
+  padding-left: 5px;
+  padding-right: 5px;
+
+  font-weight: 500;
+  color: ${TEXTCOLOR};
 `
 
 
 const InputDiv = styled.div`
   display: inline-flex;
-  height: 100%;
-
-  padding-top: 10px;
-  padding-bottom: 10px;
+  flex-direction: column;
   
+  padding: 5px 0px;
 `
 
-const InputIconDiv = styled.div`
+const InputTitle = styled.div`
+  text-align: start;
+  font-size: 14px;
+  font-weight: 500;
+  color: ${TEXTCOLOR};
+`
 
-  background-color: #FFFFFF;
-  
-  border-bottom-left-radius: 3px;
-  border-top-left-radius: 3px;
-  border: 1px solid #A0A0A0;
-  border-right: 0px;
-  
-  justify-content: center;
-  text-align: center;
-  vertical-align: middle;
-  
-  padding-left: 5px;
-  padding-right: 5px;
+const ForgotPassText = styled.span`
+  color: ${TEXTCOLOR};
+  text-align: start;
+  font-size: 12px;
+  font-weight: 300;
 `
 
 const CustomInput = (props) => {
@@ -47,11 +47,12 @@ const CustomInput = (props) => {
     return (
         <div>
             <InputDiv>
-                <InputIconDiv>
-                    {props.icon}
-                </InputIconDiv>
-
-                <Input type={props.type ? props.type : "text"} placeholder={props.children}/>
+                <InputTitle>{props.children}</InputTitle>
+                <Input type={props.type ? props.type : "text"}/>
+                {props.type === "password" ?
+                    <ForgotPassText onClick={props.handlerForgotPass}>
+                    Forgot my password
+                    </ForgotPassText> : null}
             </InputDiv>
 
         </div>
