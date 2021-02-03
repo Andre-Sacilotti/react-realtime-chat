@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import {BGCOLOR, TEXTCOLOR, AUXILARCOLOR} from "../Colors"
+
+import {TEXTCOLOR} from "../Colors"
 
 const Input = styled.input`
   background-color: #FFFFFF00;    
@@ -11,7 +12,7 @@ const Input = styled.input`
   height: 47px;
   width: 245px;
 
-  font-size: 14px;
+  font-size: 16px;
   
   padding-left: 5px;
   padding-right: 5px;
@@ -25,7 +26,7 @@ const InputDiv = styled.div`
   display: inline-flex;
   flex-direction: column;
   
-  padding: 5px 0px;
+  padding: 5px 0;
 `
 
 const InputTitle = styled.div`
@@ -44,12 +45,13 @@ const ForgotPassText = styled.span`
 
 const CustomInput = (props) => {
 
+
     return (
         <div>
             <InputDiv>
                 <InputTitle>{props.children}</InputTitle>
                 <Input type={props.type ? props.type : "text"}/>
-                {props.type === "password" ?
+                {props.type === "password" && props.register === true ?
                     <ForgotPassText onClick={props.handlerForgotPass}>
                     Forgot my password
                     </ForgotPassText> : null}

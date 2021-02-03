@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from "styled-components"
+import { useHistory } from "react-router-dom";
 
 import CustomButton from "../CustomButton/CustomButton";
 import CustomInput from "../CustomInput/CustomInput";
@@ -62,6 +63,13 @@ const FormsDiv = styled.div`
 
 const LoginBox = () => {
 
+    const history = useHistory();
+
+    const handleCreateAccount = () => {
+        console.log("[LoginBox.js] Handle Create Account")
+        history.push("/register")
+    }
+
     return (
         <UpperLoginBoxDiv>
             <LoginBoxDiv>
@@ -75,11 +83,11 @@ const LoginBox = () => {
                 </TextDiv>
 
                 <FormsDiv>
-                    <CustomInput>
+                    <CustomInput register={false}>
                         Username
                     </CustomInput>
 
-                    <CustomInput type={"password"}>
+                    <CustomInput register={true} type={"password"}>
                         Password
                     </CustomInput>
                 </FormsDiv>
@@ -89,7 +97,7 @@ const LoginBox = () => {
                 </ButtonDiv>
 
                 <TextDiv>
-                    <TextRegister>New here? Sign Up!</TextRegister>
+                    <TextRegister onClick={() => handleCreateAccount()}>New here? Sign Up!</TextRegister>
                 </TextDiv>
 
 

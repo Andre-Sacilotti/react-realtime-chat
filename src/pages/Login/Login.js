@@ -16,7 +16,6 @@ const Login = () => {
     return (
         <LoginDiv>
             <LoginBox>
-                aaa
             </LoginBox>
         </LoginDiv>
     )
