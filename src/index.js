@@ -5,13 +5,19 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 import { createStore } from 'redux'
+import { Provider } from 'react-redux';
+import ToastReducer from "./store/reducers/ToastReducer";
 
-// const store = createStore()
+const ToastStore = createStore(ToastReducer)
+
+
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+    <Provider store={ToastStore}>
+      <React.StrictMode>
+        <App/>
+      </React.StrictMode>
+    </Provider>,
   document.getElementById('root')
 );
 
@@ -19,3 +25,5 @@ ReactDOM.render(
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
+
+export default ToastStore;

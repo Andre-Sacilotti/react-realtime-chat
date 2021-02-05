@@ -1,8 +1,11 @@
-import React from 'react'
+import React, {useState} from 'react'
 import styled from "styled-components"
+import { useHistory } from "react-router-dom";
 
 import CustomButton from "../CustomButton/CustomButton";
 import CustomInput from "../CustomInput/CustomInput";
+import API from "../../services/Axios";
+import Toast from "../ToastNotification/Toast"
 
 
 import {BGCOLOR, TEXTCOLOR, AUXILARCOLOR} from "../Colors"
@@ -33,6 +36,12 @@ const UpperRegisterBoxDiv = styled.div`
     height: 666px;
     width: 414px;
   }
+
+  @media(max-height: 666px) {
+    background-color: ${AUXILARCOLOR};
+    height: 100%;
+    width: 414px;
+  }
   
 `
 
@@ -57,28 +66,80 @@ const FormsDiv = styled.div`
 
 
 
-const RegisterBox = () => {
+const RegisterBox = (props) => {
+
+
+    const [showUsername, setUsername] = useState(null)
+    const [showPassword, setPassword] = useState(null)
+
+    const history = useHistory();
+
+    const [showUserExist, setUserExist] = useState(false)
+    const handlerUsernameChange = (e) => {
+        setUsername(e.target.value)
+        setUserExist(false);
+        Toast.close()
+    }
+
+    const handlerPasswordChange = (e) => {
+        setPassword(e.target.value)
+    }
+
+
+
+    const handlerSubmitRegister = () => {
+
+        const data = {
+            username: showUsername,
+            password: showPassword
+        }
+
+        API.post("register", data).then(
+            (response) => {
+                console.log("Foi")
+                Toast.show("success", "User Registrated!", false)
+
+                setTimeout(() => history.push("/"), 500)
+
+
+            }
+        ).catch(
+            (error) => {
+                if (error.response) {
+                    if (error.response.status === 409){
+                        console.log("Usuario Existe")
+                        setUserExist(true)
+                        Toast.show("error", "User Already Exists!", true)
+
+                    }
+                } else if (error.request) {
+                    console.log("Temporariamente Indisponivel");
+                }
+            }
+        )
+    }
 
     return (
         <UpperRegisterBoxDiv>
             <RegisterBoxDiv>
+
 
                     <TextDiv>
                         <Text>Sign Up</Text>
                     </TextDiv>
 
                     <FormsDiv>
-                        <CustomInput>
+                        <CustomInput onChange={handlerUsernameChange} userNotExist={showUserExist}>
                             Username
                         </CustomInput>
 
-                        <CustomInput type={"password"}>
+                        <CustomInput onChange={handlerPasswordChange} type={"password"}>
                             Password
                         </CustomInput>
                     </FormsDiv>
 
                     <ButtonDiv>
-                        <CustomButton>Sign Up</CustomButton>
+                        <CustomButton onClick={handlerSubmitRegister}>Sign Up</CustomButton>
                     </ButtonDiv>
 
             </RegisterBoxDiv>
@@ -86,5 +147,7 @@ const RegisterBox = () => {
 
     )
 }
+
+
 
 export default RegisterBox

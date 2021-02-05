@@ -2,11 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 
 
-import {TEXTCOLOR} from "../Colors"
+import {TEXTCOLOR, ERRORCOLOR} from "../Colors"
 
 const Input = styled.input`
   background-color: #FFFFFF00;    
-  border: 1px solid ${TEXTCOLOR};
+  border: 1px solid ${props => props.userNotExist ? ERRORCOLOR : TEXTCOLOR};
   border-radius: 4px;
   
   height: 47px;
@@ -19,6 +19,11 @@ const Input = styled.input`
 
   font-weight: 500;
   color: ${TEXTCOLOR};
+  
+  &:focus, &:focus-within {
+    outline: none !important;
+    border: 2px solid ${props => props.userNotExist ? ERRORCOLOR : TEXTCOLOR};
+  }
 `
 
 
@@ -50,7 +55,7 @@ const CustomInput = (props) => {
         <div>
             <InputDiv>
                 <InputTitle>{props.children}</InputTitle>
-                <Input type={props.type ? props.type : "text"}/>
+                <Input type={props.type ? props.type : "text"} userNotExist={!!props.userNotExist} onChange={props.onChange}/>
                 {props.type === "password" && props.register === true ?
                     <ForgotPassText onClick={props.handlerForgotPass}>
                     Forgot my password

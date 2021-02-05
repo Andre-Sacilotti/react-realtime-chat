@@ -4,7 +4,7 @@ export const TEXTCOLOR = "#F9FAFB"
 
 export const AUXILARCOLOR = "#020508"
 
-export const ERRORCOLOR = "#913B3B"
+export const ERRORCOLOR = "#e74c3c"
 export const SUCCESSCOLOR = "#64BC26"
 export const WARNINGCOLOR = "#FAD202"
 
