@@ -9,6 +9,7 @@ import Navbar from "./components/Navbar/Navbar";
 import API from "./services/Axios";
 import Cookies from "universal-cookie";
 import {handlerLogin, handlerLogout} from "./store/actions/AuthAction";
+import { useHistory } from "react-router-dom";
 
 
 const ToastDiv = styled.div`
@@ -20,36 +21,6 @@ const ToastDiv = styled.div`
 
 function App(props) {
 
-    const cookies = new Cookies()
-
-    useEffect(
-        () => {
-
-            const data = {auth_token: cookies.get("auth_token")}
-
-            if (data !== ""){
-
-                API.post("token", data).then(
-                    (response) => {
-                        console.log(response)
-                        if (response.data['valid_auth'] === true){
-                            props.addLogin()
-                        }else{
-                            console.log("False")
-                        }
-                    }
-                ).catch(
-                    (error) => {
-                        console.log(error)
-                        console.log("Error")
-                    }
-                )
-
-            }
-
-        }, []
-    )
-    console.log(props.storeReducer)
   return (
     <div className="App">
       <BrowserRouter>

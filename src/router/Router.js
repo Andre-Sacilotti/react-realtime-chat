@@ -1,74 +1,44 @@
 import {Switch, Route} from 'react-router-dom'
-import {useEffect} from 'react'
-import Cookies from 'universal-cookie';
 import {Redirect} from 'react-router-dom'
-import API from "../services/Axios";
 import { useHistory } from "react-router-dom";
+import {useEffect} from "react"
 
 
 import Login from '../pages/Login/Login'
 import Register from "../pages/Register/Register"
 import {connect} from "react-redux";
 
-import {handlerLogin, handlerLogout} from '../store/actions/AuthAction'
+import PrivateRoute from "./PrivateRoute"
+import Home from "../pages/Home/Home";
+import Cookies from "universal-cookie";
+import API from "../services/Axios";
+import {handlerLogin, handlerLogout} from "../store/actions/AuthAction";
+import PublicPage from "../pages/PublicPages";
+
 
 
 const Router = (props) => {
 
-    const cookies = new Cookies()
+    console.log("Loggedin Router.js: ", props.reducer.authReducer.loggedIn)
 
-    const signJWT = require("jwt-encode")
-
-    // useEffect(
-    //     () => {
-    //
-    //         const data = {auth_token: cookies.get("auth_token")}
-    //
-    //         console.log("chave: ",  process.env.REACT_APP_SECRET_KEY)
-    //
-    //
-    //         if (data !== ""){
-    //
-    //             const jwtToken = signJWT(data, process.env.REACT_APP_SECRET_KEY)
-    //
-    //             console.log("JWT: ", jwtToken)
-    //
-    //             API.post("token", {token: jwtToken}).then(
-    //                 (response) => {
-    //                     if (response.data.get('valid_auth') === true){
-    //                         console.log("True")
-    //                         props.addLogin()
-    //                     }else{
-    //                         console.log("False")
-    //                     }
-    //                 }
-    //             ).catch(
-    //                 (error) => {
-    //                 }
-    //             )
-    //
-    //         }
-    //
-    //     }, []
-    // )
 
     return (
         <Switch>
-            {props.reducer.authReducer.loggedIn ?
-                <Route exact path={"/home"} component={() => <h1>Teste</h1>} />
+            <PublicPage>
+                <Route exact path={"/"} component={Login} />
+            </PublicPage>
 
-                : <Route exact path={"/"} component={Login} />
-                 }
-
-            {props.reducer.authReducer.loggedIn ?
-                <Redirect to={"/home"}/>
-
-                : null
-            }
+            <PublicPage>
+                <Route exact path={"/register"} component={Register} />
+            </PublicPage>
 
 
 
-            <Route exact path={"/register"} component={Register} />
+            <PrivateRoute component={Home} loggedIn={props.reducer.authReducer.loggedIn} path="/home" exact />
+            <PrivateRoute component={() => <h2>Teste</h2>} loggedIn={props.reducer.authReducer.loggedIn} path="/teste" exact />
+
+
+
         </Switch>
     )
 }
@@ -81,6 +51,13 @@ const mapStateToProps = (state) => {
 
 }
 
+const mapDispatchToPros = dispatch => {
+    return {
+        addLogin: () => dispatch(handlerLogin()),
+        removeLogin: () => dispatch(handlerLogout())
+    }
+}
 
 
-export default connect(mapStateToProps)(Router)
+
+export default connect(mapStateToProps, mapDispatchToPros)(Router)
