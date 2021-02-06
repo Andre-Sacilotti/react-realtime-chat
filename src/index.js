@@ -4,26 +4,31 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
-import { createStore } from 'redux'
+import { createStore, combineReducers } from 'redux'
 import { Provider } from 'react-redux';
 import ToastReducer from "./store/reducers/ToastReducer";
+import AuthReducer from "./store/reducers/AuthReducer";
+require('dotenv').config()
 
-const ToastStore = createStore(ToastReducer)
 
+const Store = createStore(combineReducers(
+    {
+        toastReducer: ToastReducer,
+        authReducer: AuthReducer,
+    }
+))
 
 
 ReactDOM.render(
-    <Provider store={ToastStore}>
-      <React.StrictMode>
-        <App/>
-      </React.StrictMode>
+    <Provider store={Store}>
+            <React.StrictMode>
+                <App/>
+            </React.StrictMode>
     </Provider>,
   document.getElementById('root')
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+
 reportWebVitals();
 
-export default ToastStore;
+export default Store;

@@ -1,12 +1,18 @@
-import React from 'react'
+import React, {useState} from 'react'
 import styled from "styled-components"
 import { useHistory } from "react-router-dom";
+import Cookies from 'universal-cookie';
+
+
 
 import CustomButton from "../CustomButton/CustomButton";
 import CustomInput from "../CustomInput/CustomInput";
+import API from "../../services/Axios";
 
+import {handlerLogin, handlerLogout} from "../../store/actions/AuthAction"
 
 import {BGCOLOR, TEXTCOLOR, AUXILARCOLOR} from "../Colors"
+import {connect} from "react-redux";
 
 const LoginBoxDiv = styled.div`
   border-radius: 25px;
@@ -31,6 +37,12 @@ const UpperLoginBoxDiv = styled.div`
   @media(min-width: 768px) {
     background-color: ${AUXILARCOLOR};
     height: 666px;
+    width: 414px;
+  }
+
+  @media(max-height: 666px) {
+    background-color: ${AUXILARCOLOR};
+    height: 100%;
     width: 414px;
   }
   
@@ -61,14 +73,52 @@ const FormsDiv = styled.div`
 
 
 
-const LoginBox = () => {
+const LoginBox = (props) => {
+
+
+    const cookies = new Cookies();
 
     const history = useHistory();
 
+    const [showUsername, setUsername] = useState("");
+    const [showPassword, setPassword] = useState("");
+
     const handleCreateAccount = () => {
-        console.log("[LoginBox.js] Handle Create Account")
         history.push("/register")
     }
+    
+    const handlerUsernameChange = (e) => {
+        setUsername(e.target.value)
+    }
+
+    const handlerPasswordChange = (e) => {
+        setPassword(e.target.value)
+    }
+
+    const handlerLoginSubmit = () => {
+
+        const data = {
+            username: showUsername.toLowerCase(),
+            password: showPassword
+        }
+
+        API.post("login", data).then(
+
+            (response) => {
+                console.log("login ", response)
+                cookies.set("auth_token", response.data, {path: "/", sameSite: true})
+                props.login()
+                history.push("/home")
+            }
+        ).catch(
+            (error) => {
+                console.log(error)
+                history.push("/")
+                props.logout()
+            }
+        )
+    }
+        
 
     return (
         <UpperLoginBoxDiv>
@@ -83,17 +133,17 @@ const LoginBox = () => {
                 </TextDiv>
 
                 <FormsDiv>
-                    <CustomInput register={false}>
+                    <CustomInput register={false} onChange={handlerUsernameChange}>
                         Username
                     </CustomInput>
 
-                    <CustomInput register={true} type={"password"}>
+                    <CustomInput register={true} type={"password"} onChange={handlerPasswordChange}>
                         Password
                     </CustomInput>
                 </FormsDiv>
 
                 <ButtonDiv>
-                    <CustomButton>Login</CustomButton>
+                    <CustomButton onClick={handlerLoginSubmit}>Login</CustomButton>
                 </ButtonDiv>
 
                 <TextDiv>
@@ -113,4 +163,11 @@ const LoginBox = () => {
     )
 }
 
-export default LoginBox
+const mapDispatchToProps = dispatch => {
+    return {
+        login: () => dispatch(handlerLogin()),
+        logout: () => dispatch(handlerLogout()),
+    }
+}
+
+export default connect(null, mapDispatchToProps)(LoginBox)
