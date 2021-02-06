@@ -1,14 +1,11 @@
 
 import {handlerCloseToast, handlerShowToast} from "../../store/actions/ToastAction";
 
-import ToastStore from "../../index"
+import Store from "../../index"
 
 class Toast {
 
-
-
     static show(type, message, stay){
-
         if (stay===false){
             setTimeout(
                 () => {
@@ -18,12 +15,12 @@ class Toast {
             )
         }
 
-        ToastStore.dispatch(handlerShowToast(type, message, stay))
+        Store.dispatch(handlerShowToast(type, message, stay))
     }
 
     static close(){
-        if(ToastStore.getState().show){
-            ToastStore.dispatch(handlerCloseToast())
+        if(Store.getState().toastReducer.show){
+            Store.dispatch(handlerCloseToast())
         }
 
 

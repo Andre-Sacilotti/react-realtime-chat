@@ -13,6 +13,7 @@ const NavbarDiv = styled.div`
 
   @media(min-width: 768px){
     background-color: #1b1d21;
+    position: absolute;
   }
   
 `

@@ -9,6 +9,7 @@ import Toast from "../ToastNotification/Toast"
 
 
 import {BGCOLOR, TEXTCOLOR, AUXILARCOLOR} from "../Colors"
+import Store from "../../index";
 
 const RegisterBoxDiv = styled.div`
   border-radius: 25px;
@@ -90,16 +91,18 @@ const RegisterBox = (props) => {
     const handlerSubmitRegister = () => {
 
         const data = {
-            username: showUsername,
+            username: showUsername.toLowerCase(),
             password: showPassword
         }
 
         API.post("register", data).then(
             (response) => {
-                console.log("Foi")
                 Toast.show("success", "User Registrated!", false)
+                history.push("/")
 
-                setTimeout(() => history.push("/"), 500)
+                setTimeout(() => {
+                    Toast.close()
+                }, 1000)
 
 
             }
@@ -107,7 +110,6 @@ const RegisterBox = (props) => {
             (error) => {
                 if (error.response) {
                     if (error.response.status === 409){
-                        console.log("Usuario Existe")
                         setUserExist(true)
                         Toast.show("error", "User Already Exists!", true)
 
