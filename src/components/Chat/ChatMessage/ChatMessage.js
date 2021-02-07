@@ -36,6 +36,7 @@ const AuthorDiv = styled.div`
   padding-top: 5px;
   font-size: 13px;
   font-weight: 500;
+  
 
 `
 
@@ -67,12 +68,18 @@ const HourDiv = styled.div`
 `
 
 const ChatMessage = (props) => {
+    
+    let username = props.user
+    
+    if (username.length > 15){
+        username = username.substring(0, 15)+"..."
+    }
 
     return (
         <ChatMessageDiv user_own={props.user_own}>
             <MessageBodyDiv user_own={props.user_own}>
                 <AuthorDiv>
-                    {props.user}
+                    {username}
                 </AuthorDiv>
 
                 <MessageContentDiv>
