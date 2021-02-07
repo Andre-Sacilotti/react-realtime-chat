@@ -5,11 +5,7 @@ import Router from "./router/Router"
 import {connect} from 'react-redux'
 import ToastNotification from "./components/ToastNotification/ToastNotification";
 import styled from 'styled-components'
-import Navbar from "./components/Navbar/Navbar";
-import API from "./services/Axios";
-import Cookies from "universal-cookie";
 import {handlerLogin, handlerLogout} from "./store/actions/AuthAction";
-import { useHistory } from "react-router-dom";
 
 
 const ToastDiv = styled.div`
@@ -21,12 +17,14 @@ const ToastDiv = styled.div`
 
 function App(props) {
 
+
+
   return (
     <div className="App">
       <BrowserRouter>
-          <Navbar>
+          {/*<Navbar>*/}
 
-          </Navbar>
+          {/*</Navbar>*/}
           <ToastDiv>
               <ToastNotification stay={props.storeReducer.toastReducer.stay}
                                  hide={props.storeReducer.toastReducer.hide}

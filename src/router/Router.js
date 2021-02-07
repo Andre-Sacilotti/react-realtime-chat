@@ -1,47 +1,51 @@
 import {Switch, Route} from 'react-router-dom'
-import {Redirect} from 'react-router-dom'
-import { useHistory } from "react-router-dom";
-import {useEffect} from "react"
 
 
 import Login from '../pages/Login/Login'
 import Register from "../pages/Register/Register"
 import {connect} from "react-redux";
+import { useLocation } from 'react-router-dom'
 
-import PrivateRoute from "./PrivateRoute"
 import Home from "../pages/Home/Home";
-import Cookies from "universal-cookie";
-import API from "../services/Axios";
 import {handlerLogin, handlerLogout} from "../store/actions/AuthAction";
 import PublicPage from "../pages/PublicPages";
+import PrivatePage from "../pages/PrivatePage";
+
 
 
 
 const Router = (props) => {
 
-    console.log("Loggedin Router.js: ", props.reducer.authReducer.loggedIn)
-
-
+    const location = useLocation();
+    console.log("Router: ", location.pathname);
     return (
         <Switch>
-            <PublicPage>
-                <Route exact path={"/"} component={Login} />
-            </PublicPage>
 
-            <PublicPage>
-                <Route exact path={"/register"} component={Register} />
-            </PublicPage>
+            <Route exact path={"/teste"} component={
+                () => <PrivatePage loggedIn={props.reducer.authReducer.loggedIn}><h2>Rota de Teste</h2></PrivatePage>} />
+
+            <Route exact path={"/home"} component={
+                () => <PrivatePage loggedIn={props.reducer.authReducer.loggedIn}><Home/></PrivatePage>} />
+
+            <Route exact path={"/"} component={
+                () => <PublicPage actual_path={location.pathname} loggedIn={props.reducer.authReducer.loggedIn}><Login/></PublicPage>} />
+
+            <Route exact path={"/register"} component={
+                () => <PublicPage actual_path={location.pathname}  loggedIn={props.reducer.authReducer.loggedIn}><Register/></PublicPage>} />
 
 
 
-            <PrivateRoute component={Home} loggedIn={props.reducer.authReducer.loggedIn} path="/home" exact />
-            <PrivateRoute component={() => <h2>Teste</h2>} loggedIn={props.reducer.authReducer.loggedIn} path="/teste" exact />
+
+
+
+
+
 
 
 
         </Switch>
     )
-}
+};
 
 const mapStateToProps = (state) => {
 

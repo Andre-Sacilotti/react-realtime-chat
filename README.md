@@ -15,6 +15,9 @@ I used as primary color #4F5E7B, then, changed lightness to 10% and 98% to get b
 
 Clone the Repository, then:
 
+Create an .env ou env variables defining ```SECRET_KEY```, using the same key from backend api, its used on JWT
+
+
 ```bash
 npm install
 npm start
