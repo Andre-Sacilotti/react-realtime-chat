@@ -72,15 +72,15 @@ const ChatMessage = (props) => {
         <ChatMessageDiv user_own={props.user_own}>
             <MessageBodyDiv user_own={props.user_own}>
                 <AuthorDiv>
-                    Carlos Alberto
+                    {props.user}
                 </AuthorDiv>
 
                 <MessageContentDiv>
-                    Mensagem muito extensa enviada por um usuario autenticado
+                    {props.children}
                 </MessageContentDiv>
 
                 <HourDiv>
-                    12:54
+                    {props.hour}
                 </HourDiv>
             </MessageBodyDiv>
 
