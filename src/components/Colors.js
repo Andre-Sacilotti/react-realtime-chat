@@ -17,3 +17,5 @@ export const TONE60 = "#8392AF"
 export const TONE70 = "#A2ADC3"
 export const TONE80 = "#C1C8D7"
 export const TONE90 = "#E0E4EB"
+
+export const ChatInput = "#C4C4C4"

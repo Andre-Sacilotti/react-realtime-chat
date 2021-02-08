@@ -1,6 +1,5 @@
-import React, {useEffect} from 'react';
-import AuthCheck from "../services/Auth";
-import {Redirect, useHistory} from "react-router-dom";
+import React from 'react';
+import {Redirect} from "react-router-dom";
 import {connect} from "react-redux";
 import {handlerLogin, handlerLogout} from "../store/actions/AuthAction";
 

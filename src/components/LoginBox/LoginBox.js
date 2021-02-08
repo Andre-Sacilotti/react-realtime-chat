@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState} from 'react'
 import styled from "styled-components"
 import { useHistory } from "react-router-dom";
 import Cookies from 'universal-cookie';
@@ -13,8 +13,8 @@ import {handlerLogin, handlerLogout} from "../../store/actions/AuthAction"
 
 import {BGCOLOR, TEXTCOLOR, AUXILARCOLOR} from "../Colors"
 import {connect} from "react-redux";
-
-import AuthCheck from "../../services/Auth";
+import Store from "../../index";
+import {useEffect} from "react";
 
 const LoginBoxDiv = styled.div`
   border-radius: 25px;
@@ -85,6 +85,35 @@ const LoginBox = (props) => {
     const [showUsername, setUsername] = useState("");
     const [showPassword, setPassword] = useState("");
 
+    useEffect(() => {
+        console.log("Auth token: ", localStorage.getItem("@react_realtime_asgit/auth_token"))
+
+        const data = {auth_token: localStorage.getItem("@react_realtime_asgit/auth_token")}
+
+        API.post("token", data).then(
+            (response) => {
+                console.log("UseEffect Respnse ", response)
+                response.data['valid_auth'] ? sessionStorage.setItem("@react_realtime_asgit/loggedIn", 'true') : sessionStorage.setItem("@react_realtime_asgit/loggedIn", 'false')
+
+                props.login()
+
+                if (typeof props.location.state !== "undefined" ){
+                    console.log("Login continue: ", props.location.state.from.pathname)
+                    history.push(props.location.state.from.pathname)
+                }else{
+                    history.push("/home")
+                }
+
+            }
+        ).catch(
+            (error) => {
+                console.log("UseEffect Error ", error)
+            }
+        )
+
+
+    }, [])
+
 
 
     const handleCreateAccount = () => {
@@ -106,19 +135,28 @@ const LoginBox = (props) => {
             password: showPassword
         }
 
+        console.log("LoginBox ", props)
+
         API.post("login", data).then(
 
             (response) => {
-                console.log("problema era aqui")
-                console.log("login ", response)
-                cookies.set("auth_token", response.data, {path: "/", sameSite: true})
+                localStorage.setItem("@react_realtime_asgit/auth_token", response.data)
+                sessionStorage.setItem("@react_realtime_asgit/loggedIn", 'true')
                 props.login()
-                history.push("/home")
+
+                if (typeof props.location.state !== "undefined" ){
+                    console.log("Login continue: ", props.location.state.from.pathname)
+                    history.push(props.location.state.from.pathname)
+                }else{
+                    history.push("/home")
+                }
             }
         ).catch(
             (error) => {
-                console.log(error)
+                console.log("Erro LB BUtao", error)
                 history.push("/")
+                localStorage.setItem("@react_realtime_asgit/auth_token", "")
+                sessionStorage.setItem("@react_realtime_asgit/loggedIn", 'false')
                 props.logout()
             }
         )

@@ -8,39 +8,41 @@ import { useLocation } from 'react-router-dom'
 
 import Home from "../pages/Home/Home";
 import {handlerLogin, handlerLogout} from "../store/actions/AuthAction";
-import PublicPage from "../pages/PublicPages";
-import PrivatePage from "../pages/PrivatePage";
-
+import PrivateRoute from "../pages/PrivatePage";
 
 
 
 const Router = (props) => {
-
-    const location = useLocation();
-    console.log("Router: ", location.pathname);
     return (
         <Switch>
 
-            <Route exact path={"/teste"} component={
-                () => <PrivatePage loggedIn={props.reducer.authReducer.loggedIn}><h2>Rota de Teste</h2></PrivatePage>} />
 
-            <Route exact path={"/home"} component={
-                () => <PrivatePage loggedIn={props.reducer.authReducer.loggedIn}><Home/></PrivatePage>} />
+
+
 
             <Route exact path={"/"} component={
-                () => <PublicPage actual_path={location.pathname} loggedIn={props.reducer.authReducer.loggedIn}><Login/></PublicPage>} />
+                (props) => {
+                    return <Login {...props}/>
+                }} />
 
             <Route exact path={"/register"} component={
-                () => <PublicPage actual_path={location.pathname}  loggedIn={props.reducer.authReducer.loggedIn}><Register/></PublicPage>} />
+                () => <Register/>} />
 
 
+            <PrivateRoute
+                exact
+                path={"/teste"}
+                loggedIn={props.reducer.authReducer.loggedIn}
+                component={ () => <h2>Rota de Teste</h2>}
+            />
 
 
-
-
-
-
-
+            <PrivateRoute
+                exact
+                path={"/home"}
+                loggedIn={props.reducer.authReducer.loggedIn}
+                component={ () => <Home/>}
+            />
 
 
         </Switch>

@@ -29,6 +29,8 @@ const MessageBodyDiv = styled.div`
   justify-content: start;
   flex-direction: column;
   
+  
+  
 `
 
 const AuthorDiv = styled.div`

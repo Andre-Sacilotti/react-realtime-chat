@@ -11,11 +11,11 @@ const LoginDiv = styled.div`
 `
 
 
-const Login = () => {
+const Login = (props) => {
 
     return (
         <LoginDiv>
-            <LoginBox>
+            <LoginBox {...props}>
             </LoginBox>
         </LoginDiv>
     )
